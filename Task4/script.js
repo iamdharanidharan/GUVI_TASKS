@@ -27,14 +27,12 @@ request.onload = function(){
 
     //Countries which use US dollars
     let countriesUsingUsDollars = countryData.filter((x) => {
-        let check = false;
         for(let curr in x.currencies){
             if(x.currencies[curr].code == 'USD'){
-                check = true;
-                break;
+               return true;
             }
         }
-        return check;
+        
     }).map(x => console.log(x.name));
     //console.log(countriesUsingUsDollars);
 
