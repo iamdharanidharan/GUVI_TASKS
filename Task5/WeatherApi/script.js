@@ -9,10 +9,17 @@ requestCountryData.onload = function(){
     var  countryData= JSON.parse(this.response);   
     
     for(country in countryData){
+        try{
         var countryName = countryData[country].name;
         var latLong = countryData[country].latlng;
+        if(latLong.length === 0) 
+        throw new Error("Lat Long not found");
         //send Country name and location to weather data api
         weatherData(countryName, ...latLong);
+        }
+        catch(e){
+            console.log('Invalid co-ordinate data for country: ' + countryName + ' ' + e.message);
+        }
     }
 }
 
@@ -36,7 +43,7 @@ var weatherData = function(name, lat , lng){
         }
 
         catch(e){
-            console.log('Invalid co-ordinate data for country: ' + name);
+            console.log('Invalid response from API for ' + name);
         }
     }
 
